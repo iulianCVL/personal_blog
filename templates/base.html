@@ -46,6 +46,18 @@
     });
   });
 </script>
+<script>
+  // Elimină automat mesajele după 3 secunde
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+      document.querySelectorAll('.alert').forEach(function (el) {
+        el.classList.add('fade');
+        el.classList.remove('show');
+        setTimeout(() => el.remove(), 500);  // După animație, șterge elementul
+      });
+    }, 3000);
+  });
+</script>
 
 
 

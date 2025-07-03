@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block title %}Șterge Postare - Blog Personal{% endblock %}
+
 {% block content %}
-    <h1>Șterge Postare</h1>
-    <p>Ești sigur că vrei să ștergi postarea "{{ post.title }}"?</p>
+  <div class="alert alert-warning text-center">
+    <h4>Confirmă ștergerea</h4>
+    <p>Ești sigur că vrei să ștergi această postare?</p>
     <form method="post">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Șterge</button>
-        <a href="{% url 'post_detail' post.pk %}" class="btn btn-secondary">Anulează</a>
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Șterge</button>
+      <a href="{% url 'post_detail' post.pk %}" class="btn btn-secondary">Anulează</a>
     </form>
+  </div>
 {% endblock %}
