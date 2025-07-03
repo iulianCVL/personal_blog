@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Rezultate Căutare - Blog Personal{% endblock %}
+{% block content %}
+    <h1>Rezultate pentru "{{ query }}"</h1>
+    {% if page_obj %}
+        {% for post in page_obj %}
+            <div class="card post-card mb-3">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="max-height: 200px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h5>
+                    <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                    <p class="card-text"><small class="text-muted">Autor: {{ post.author }} | {{ post.created_at|date:"d M Y" }}</small></p>
+                    {% if post.category %}
+                        <span class="badge bg-secondary">{{ post.category }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        <nav aria-label="Paginare">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ query }}">Anterior</a></li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}&q={{ query }}">{{ num }}</a>
+                    </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ query }}">Următor</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% else %}
+        <p>Nu s-au găsit postări.</p>
+    {% endif %}
+{% endblock %}
