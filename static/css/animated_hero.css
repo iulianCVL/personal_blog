@@ -1,0 +1,96 @@
+/* =================== Animated Hero Futuristic =================== */
+.animated-hero {
+    padding: 4rem 2rem;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(10, 10, 30, 0.85), rgba(0, 60, 130, 0.3));
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    transition: background 0.5s ease-in-out;
+    animation: floatIn 3s ease-out;
+    box-shadow: 0 0 25px rgba(0, 195, 255, 0.1);
+}
+
+/* 🌈 Culoare dinamică pentru temă */
+body {
+    --hero-sub-color: #cccccc;
+    --glow-color: rgba(0, 195, 255, 0.12);
+}
+body.light-mode {
+    --hero-sub-color: #444;
+    --glow-color: rgba(0, 100, 255, 0.06);
+}
+
+/* === TITLU GRADIENT ANIMAT === */
+.animated-hero h1.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(270deg, #00f0ff, #6a00ff, #ff00ff, #00f0ff);
+    background-size: 600% 600%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: gradientFlow 8s ease infinite;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ✨ SUBTITLU */
+.animated-hero p.lead {
+    font-size: 1.25rem;
+    color: var(--hero-sub-color);
+    z-index: 2;
+    position: relative;
+    text-shadow: 0 0 5px rgba(255,255,255,0.05);
+}
+
+/* 💫 FUNDALE ANIMATE - CULORI FUTURISTE */
+.animated-hero::before,
+.animated-hero::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    z-index: 1;
+    opacity: 0.08;
+    background: radial-gradient(circle, #00ffff 0%, transparent 70%), 
+                radial-gradient(circle, #ff00ff 0%, transparent 70%);
+    background-size: 200% 200%;
+    animation: neonFlow 20s linear infinite;
+    filter: blur(80px);
+}
+
+.animated-hero::after {
+    animation-delay: 10s;
+    background: radial-gradient(circle, #ff00cc 0%, transparent 70%), 
+                radial-gradient(circle, #00ffff 0%, transparent 70%);
+}
+
+@keyframes neonFlow {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* 🪄 Efect plutire inițială */
+@keyframes floatIn {
+    0% {
+        transform: translateY(60px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

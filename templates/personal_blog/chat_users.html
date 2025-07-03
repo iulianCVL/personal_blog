@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div style="max-width: 700px; margin: 50px auto; padding: 20px; background: var(--bg-card, #1e1e1e); border-radius: 10px;">
+    <h2 style="text-align: center; margin-bottom: 20px;">👥 Chat între utilizatori</h2>
+    
+    {% if users %}
+      <ul style="list-style: none; padding: 0;">
+        {% for user in users %}
+          <li style="margin-bottom: 15px; background: var(--bg-light, #2c2c2c); padding: 10px 15px; border-radius: 8px;">
+            {{ user.username }}
+            <a href="{% url 'chat_with_user' username=user.username %}" class="btn btn-sm btn-primary">Deschide chat</a> <!-- ✅ -->
+
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Nu există alți utilizatori momentan.</p>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+
+{# ==== FOLLOW / UNFOLLOW ==== #}
+{% if user != post.author %}
+  <form method="post" action="{% url 'follow_toggle' post.author.username %}">
+    {% csrf_token %}
+    {% if user in post.author.followers.all %}
+      <button type="submit" class="btn btn-sm btn-outline-danger">Neurmărește</button>
+    {% else %}
+      <button type="submit" class="btn btn-sm btn-outline-primary">Urmărește</button>
+    {% endif %}
+  </form>
+{% endif %}
+
+<hr>
+
+{# ==== BOOKMARK ====#}
+<form method="post" action="{% url 'bookmark_toggle' post.pk %}">
+  {% csrf_token %}
+  {% if user in post.bookmarked_by.all %}
+    <button type="submit" class="btn btn-warning btn-sm">★ Salvat</button>
+  {% else %}
+    <button type="submit" class="btn btn-outline-warning btn-sm">☆ Salvează</button>
+  {% endif %}
+</form>
+
+<hr>
+
+{# ==== REACȚII ==== #}
+<p>Reacționează:</p>
+<form method="post" action="{% url 'react_post' post.pk 'like' %}">{% csrf_token %}
+  <button type="submit" class="btn btn-outline-secondary btn-sm">👍</button>
+</form>
+<form method="post" action="{% url 'react_post' post.pk 'love' %}">{% csrf_token %}
+  <button type="submit" class="btn btn-outline-secondary btn-sm">❤️</button>
+</form>
+<form method="post" action="{% url 'react_post' post.pk 'laugh' %}">{% csrf_token %}
+  <button type="submit" class="btn btn-outline-secondary btn-sm">😂</button>
+</form>
+<form method="post" action="{% url 'react_post' post.pk 'sad' %}">{% csrf_token %}
+  <button type="submit" class="btn btn-outline-secondary btn-sm">😢</button>
+</form>
+<form method="post" action="{% url 'react_post' post.pk 'angry' %}">{% csrf_token %}
+  <button type="submit" class="btn btn-outline-secondary btn-sm">😠</button>
+</form>
+
+<hr>
+
+{# ==== TAGURI ==== #}
+<p>Etichete:</p>
+{% for tag in post.tags.all %}
+  <a href="{% url 'posts_by_tag' tag.name %}" class="badge bg-info text-dark">{{ tag.name }}</a>
+{% empty %}
+  <span class="text-muted">Fără etichete</span>
+{% endfor %}

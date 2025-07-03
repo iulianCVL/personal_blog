@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Acasă - Blog Personal{% endblock %}
+
+{% block content %}
+
+<div class="animated-hero text-center">
+    <h1 class="hero-title">Bine ai venit pe Blogul Personal</h1>
+    <p class="lead">Descoperă povești, idei și inspirație!</p>
+</div>
+<link rel="stylesheet" href="{% static 'css/animated_hero.css' %}">
+
+
+
+
+<div class="container">
+    <h2 class="mb-4 text-center">Postări Recente</h2>
+
+    {% if page_obj %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for post in page_obj %}
+            <div class="col">
+                <a href="{% url 'post_detail' post.pk %}" class="card text-decoration-none text-reset h-100 d-block post-card">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                        <small class="author-text d-block mt-2">
+                            Autor:
+                            {% if post.author.profile.avatar %}
+                                <img src="{{ post.author.profile.avatar.url }}" alt="{{ post.author.username }}" class="rounded-circle" style="width: 30px; height: 30px;">
+                            {% else %}
+                                <span class="default-avatar">{{ post.author.username|slice:":1" }}</span>
+                            {% endif %}
+                            <span class="author-name">{{ post.author }}</span> |
+                            {{ post.created_at|date:"d M Y" }}
+                        </small>
+                        {% if post.category %}
+                            <span class="badge bg-secondary mt-2">{{ post.category }}</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center text-muted">Nu există postări disponibile.</p>
+    {% endif %}
+        
+    {% if page_obj.has_other_pages %}
+        <nav aria-label="Paginare" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    </li>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Următor</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+{% endblock %}

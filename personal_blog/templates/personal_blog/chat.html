@@ -1,0 +1,25 @@
+<input type="text" id="messageInput" placeholder="Scrie un mesaj...">
+<button onclick="sendMessage()">Trimite</button>
+<div id="chatBox"></div>
+
+<script>
+const username = "{{ user.username }}";
+const otherUser = "{{ other_user }}";  // definește din view
+const chatSocket = new WebSocket(
+    'ws://' + window.location.host + '/ws/chat/' + otherUser + '/'
+);
+
+chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    const msg = data.sender + ": " + data.message;
+    document.getElementById("chatBox").innerHTML += "<p>" + msg + "</p>";
+};
+
+function sendMessage() {
+    const input = document.getElementById("messageInput");
+    chatSocket.send(JSON.stringify({
+        'message': input.value
+    }));
+    input.value = '';
+}
+</script>

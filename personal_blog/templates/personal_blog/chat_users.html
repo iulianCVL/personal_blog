@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Chat - Utilizatori{% endblock %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Alege un utilizator pentru a începe chat-ul</h2>
+    <div class="list-group">
+        {% for user in users %}
+            <a href="{% url 'chat' username=user.username %}" class="list-group-item list-group-item-action">
+                {{ user.username }}
+            </a>
+        {% empty %}
+            <p class="text-muted">Nu există alți utilizatori disponibili.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

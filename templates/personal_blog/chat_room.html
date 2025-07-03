@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Chat cu {{ username }}</h2>
+<div id="chat-log" style="height: 300px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;"></div>
+<input type="text" id="chat-message-input" placeholder="Scrie un mesaj..." class="form-control mt-2">
+<button id="chat-message-submit" class="btn btn-primary mt-2">Trimite</button>
+
+<script>
+    const username = "{{ username }}";
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/chat/' + username + '/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const chatLog = document.getElementById('chat-log');
+        chatLog.innerHTML += '<p><strong>' + data.username + ':</strong> ' + data.message + '</p>';
+        chatLog.scrollTop = chatLog.scrollHeight;
+    };
+
+    document.getElementById('chat-message-submit').onclick = function(e) {
+        const input = document.getElementById('chat-message-input');
+        const message = input.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        input.value = '';
+    };
+</script>
+{% endblock %}

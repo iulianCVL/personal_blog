@@ -1,0 +1,41 @@
+
+:root {
+  --text-color-light: #111;
+  --text-color-dark: #fff;
+  --badge-bg-light: #eee;
+  --badge-bg-dark: #333;
+}
+
+body[data-theme="light"] {
+  --text-color: var(--text-color-light);
+  --badge-bg: var(--badge-bg-light);
+}
+
+body[data-theme="dark"] {
+  --text-color: var(--text-color-dark);
+  --badge-bg: var(--badge-bg-dark);
+}
+
+.author-text {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.author-name {
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.default-avatar {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #555;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+}
